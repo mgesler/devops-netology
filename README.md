@@ -54,11 +54,11 @@ Home work 03-sysadmin-01-terminal
 
 6. Ознакомьтесь с возможностями конфигурации VirtualBox через Vagrantfile: документация. Как добавить оперативной памяти или ресурсов процессора виртуальной машине?
 >
-Изменением/добавлением следующих параметров Vagrantfile
-config.vm.provider "virtualbox" do |v|  
-  v.memory = 1024    
-  v.cpus = 2  
-end
+>Изменением/добавлением следующих параметров Vagrantfile
+>config.vm.provider "virtualbox" do |v|  
+ > v.memory = 1024    
+>  v.cpus = 2  
+>end  
 >
 8. Команда vagrant ssh из директории, в которой содержится Vagrantfile, позволит вам оказаться внутри виртуальной машины без каких-либо дополнительных настроек. Попрактикуйтесь в выполнении обсуждаемых команд в терминале Ubuntu.
 > Работает!  
@@ -93,73 +93,6 @@ bash is /bin/bash
 >
 13. Чем отличается планирование команд с помощью batch и at?
 >команда at используется для назначения одноразового задания на заданное время, а команда batch — для назначения одноразовых задач, которые должны выполняться, когда загрузка системы становится меньше 0,8.  
-
-
-
-
-
-
-
-
-vagrant up
-Bringing machine 'default' up with 'virtualbox' provider...
-==> default: Box 'bento/ubuntu-20.04' could not be found. Attempting to find and install...
-    default: Box Provider: virtualbox
-    default: Box Version: >= 0
-==> default: Loading metadata for box 'bento/ubuntu-20.04'
-    default: URL: https://vagrantcloud.com/bento/ubuntu-20.04
-==> default: Adding box 'bento/ubuntu-20.04' (v202107.28.0) for provider: virtualbox
-    default: Downloading: https://vagrantcloud.com/bento/boxes/ubuntu-20.04/versions/202107.28.0/providers/virtualbox.box
-    default:
-==> default: Successfully added box 'bento/ubuntu-20.04' (v202107.28.0) for 'virtualbox'!
-==> default: Importing base box 'bento/ubuntu-20.04'...
-==> default: Matching MAC address for NAT networking...
-==> default: Checking if box 'bento/ubuntu-20.04' version '202107.28.0' is up to date...
-==> default: Setting the name of the VM: files_default_1633011561489_58955
-Vagrant is currently configured to create VirtualBox synced folders with
-the `SharedFoldersEnableSymlinksCreate` option enabled. If the Vagrant
-guest is not trusted, you may want to disable this option. For more
-information on this option, please refer to the VirtualBox manual:
-
-  https://www.virtualbox.org/manual/ch04.html#sharedfolders
-
-This option can be disabled globally with an environment variable:
-
-  VAGRANT_DISABLE_VBOXSYMLINKCREATE=1
-
-or on a per folder basis within the Vagrantfile:
-
-  config.vm.synced_folder '/host/path', '/guest/path', SharedFoldersEnableSymlinksCreate: false
-==> default: Clearing any previously set network interfaces...
-==> default: Preparing network interfaces based on configuration...
-    default: Adapter 1: nat
-==> default: Forwarding ports...
-    default: 22 (guest) => 2222 (host) (adapter 1)
-==> default: Booting VM...
-==> default: Waiting for machine to boot. This may take a few minutes...
-    default: SSH address: 127.0.0.1:2222
-    default: SSH username: vagrant
-    default: SSH auth method: private key
-Timed out while waiting for the machine to boot. This means that
-Vagrant was unable to communicate with the guest machine within
-the configured ("config.vm.boot_timeout" value) time period.
-
-If you look above, you should be able to see the error(s) that
-Vagrant had when attempting to connect to the machine. These errors
-are usually good hints as to what may be wrong.
-
-If you're using a custom box, make sure that networking is properly
-working and you're able to connect to the machine. It is a common
-problem that networking isn't setup properly in these boxes.
-Verify that authentication configurations are also setup properly,
-as well.
-
-If the box appears to be booting properly, you may want to increase
-the timeout ("config.vm.boot_timeout") value.
-
-
-
-
 
 
 
