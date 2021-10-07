@@ -1,112 +1,162 @@
 # devops-netology
-Home work 03-sysadmin-05-fs
+Home work 03-sysadmin-01-terminal
 
-Домашнее задание к занятию "3.5. Файловые системы"  
+Домашнее задание к занятию "3.1. Работа в терминале, лекция 1"  
 
-1.Узнайте о sparse (разряженных) файлах.  
-Ранее сталкивался с таким понятием при резервном копировании виртуальных машин Proxmox
 
-2.Могут ли файлы, являющиеся жесткой ссылкой на один объект, иметь разные права доступа и владельца? Почему?  
-Не могут, т.к. hard link - это объект полностью идентичный оригинальному файлу.  
+1. Установите средство виртуализации Oracle VirtualBox.  
+> Сделано  
+2. Установите средство автоматизации Hashicorp Vagrant.  
 
-3. Сделал. У меня Proxmox, но думаю, что для данной задачи это не принципиально, ОС Ubuntu 20LTS  
-4. Используя fdisk, разбейте первый диск на 2 раздела: 2 Гб, оставшееся пространство.  
-lsblk выдал мне такую информацию о новых дисках 
-sda                         8:0    0  2.5G  0 disk  
-sdb                         8:16   0  2.5G  0 disk  
-Далее fdisk /dev/sda   
-Command (m for help): n  
-Partition type  
-   p   primary (0 primary, 0 extended, 4 free)  
-   e   extended (container for logical partitions)  
-Select (default p): p  
-Partition number (1-4, default 1):  
-First sector (2048-5242879, default 2048):  
-Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-5242879, default 5242879): +2G
-Created a new partition 1 of type 'Linux' and of size 2 GiB.
-Command (m for help): n  
-Partition type  
-   p   primary (1 primary, 0 extended, 3 free)  
-   e   extended (container for logical partitions)  
-Select (default p): p  
-Partition number (2-4, default 2):  
-First sector (4196352-5242879, default 4196352):  
-Last sector, +/-sectors or +/-size{K,M,G,T,P} (4196352-5242879, default 5242879):  
-Created a new partition 2 of type 'Linux' and of size 511 MiB.  
-Command (m for help): w  
-The partition table has been altered.  
-Calling ioctl() to re-read partition table.  
-Syncing disks.  
+В вашем основном окружении подготовьте удобный для дальнейшей работы терминал.    
+> Выбран Windows Terminal в Windows  
 
-5. Используя sfdisk, перенесите данную таблицу разделов на второй диск.  
-Выгрузил файл для sfdisk с помощью команды O fdisk в /root/sda.txt и далее sfdisk /dev/sdb < /root/sda.txt  
-6. Соберите mdadm RAID1 на паре разделов 2 Гб.  
-mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1  
-7. Соберите mdadm RAID0 на второй паре маленьких разделов.  
-mdadm --create --verbose /dev/md1 --level=0 --raid-devices=2 /dev/sda2 /dev/sdb2  
-8. Создайте 2 независимых PV на получившихся md-устройствах.  
-root@lab01:/home/root2# pvcreate /dev/md0  
-  Physical volume "/dev/md0" successfully created.  
-root@lab01:/home/root2# pvcreate /dev/md1  
-  Physical volume "/dev/md1" successfully created.  
-9. Создайте общую volume-group на этих двух PV  
-vgcreate LVMvgTEST /dev/md0 /dev/md1  
-10. Создайте LV размером 100 Мб, указав его расположение на PV с RAID0.  
-lvcreate -L 100 -ntestlv  LVMvgTEST /dev/md1  
-11. Создайте mkfs.ext4 ФС на получившемся LV
-mkfs.ext4 /dev/LVMvgTEST/testlv  
-12. Смонтируйте этот раздел в любую директорию, например, /tmp/new.
-mount /dev/LVMvgTEST/testlv /mnt  
-13. Поместите туда тестовый файл, например wget https://mirror.yandex.ru/ubuntu/ls-lR.gz -O /tmp/new/test.gz
-Сделано
-14. Прикрепите вывод lsblk
-lsblk
-NAME                      MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
-loop0                       7:0    0 55.4M  1 loop  /snap/core18/2128
-loop1                       7:1    0 70.3M  1 loop  /snap/lxd/21029
-loop2                       7:2    0 32.3M  1 loop  /snap/snapd/12704
-loop3                       7:3    0 32.3M  1 loop  /snap/snapd/13170
-loop4                       7:4    0 61.8M  1 loop  /snap/core20/1081
-loop5                       7:5    0 67.3M  1 loop  /snap/lxd/21545
-sda                         8:0    0  2.5G  0 disk
-├─sda1                      8:1    0    2G  0 part
-│ └─md0                     9:0    0    2G  0 raid1
-└─sda2                      8:2    0  511M  0 part
-  └─md1                     9:1    0 1018M  0 raid0
-    └─LVMvgTEST-testlv    253:1    0  100M  0 lvm   /mnt
-sdb                         8:16   0  2.5G  0 disk
-├─sdb1                      8:17   0    2G  0 part
-│ └─md0                     9:0    0    2G  0 raid1
-└─sdb2                      8:18   0  511M  0 part
-  └─md1                     9:1    0 1018M  0 raid0
-    └─LVMvgTEST-testlv    253:1    0  100M  0 lvm   /mnt
-sr0                        11:0    1 1024M  0 rom
-vda                       252:0    0  101G  0 disk
-├─vda1                    252:1    0    1M  0 part
-├─vda2                    252:2    0    1G  0 part  /boot
-└─vda3                    252:3    0  100G  0 part
-  └─ubuntu--vg-ubuntu--lv 253:0    0   50G  0 lvm   /  
-15. Протестируйте целостность файла:
-root@lab01:/dev/LVMvgTEST#  gzip -t /mnt/test.gz
-root@lab01:/dev/LVMvgTEST# echo $?
-0
-16. Используя pvmove, переместите содержимое PV с RAID0 на RAID1.
-pvmove /dev/md1 /dev/md0  
-File descriptor 4 (pipe:[56150]) leaked on pvmove invocation. Parent PID 15443: bash  
-File descriptor 5 (pipe:[56150]) leaked on pvmove invocation. Parent PID 15443: bash  
-File descriptor 9 (pipe:[56153]) leaked on pvmove invocation. Parent PID 15443: bash  
-  /dev/md1: Moved: 100.00%  
-17. Сделайте --fail на устройство в вашем RAID1 md.
-mdadm /dev/md0 --fail /dev/sda1  
-mdadm: set /dev/sda1 faulty in /dev/md0  
-18. Подтвердите выводом dmesg, что RAID1 работает в деградированном состоянии.  
-[39329.053304] md/raid1:md0: Disk failure on sda1, disabling device.  
-               md/raid1:md0: Operation continuing on 1 devices.  
-19. Протестируйте целостность файла, несмотря на "сбойный" диск он должен продолжать быть доступен:  
-root@lab01:/dev/LVMvgTEST# gzip -t /mnt/test.gz  
-root@lab01:/dev/LVMvgTEST# echo $?  
-0  
-20. Сделано.
+3. С помощью базового файла конфигурации запустите Ubuntu 20.04 в VirtualBox посредством Vagrant:  
+
+- Создайте директорию, в которой будут храниться конфигурационные файлы Vagrant. В ней выполните vagrant init. Замените содержимое Vagrantfile по умолчанию следующим:  
+
+ Vagrant.configure("2") do |config|  
+ 	config.vm.box = "bento/ubuntu-20.04"  
+ end  
+> Сделано  
+> vagrant init
+> A `Vagrantfile` has been placed in this directory. You are now
+> ready to `vagrant up` your first virtual environment! Please read
+> the comments in the Vagrantfile as well as documentation on
+> `vagrantup.com` for more information on using Vagrant.
+
+
+- Выполнение в этой директории vagrant up установит провайдер VirtualBox для Vagrant, скачает необходимый образ и запустит виртуальную машину.  
+>
+> vagrant up
+> Bringing machine 'default' up with 'virtualbox' provider...
+> ==> default: Box 'bento/ubuntu-20.04' could not be found. Attempting to find and install...
+>    default: Box Provider: virtualbox
+>    default: Box Version: >= 0
+>==> default: Loading metadata for box 'bento/ubuntu-20.04'
+>     default: URL: https://vagrantcloud.com/bento/ubuntu-20.04
+> ==> default: Adding box 'bento/ubuntu-20.04' (v202107.28.0) for provider: virtualbox
+>    default: Downloading: https://vagrantcloud.com/bento/boxes/ubuntu-20.04/versions/202107.28.0/providers/virtualbox.box
+>    default:
+> ==> default: Successfully added box 'bento/ubuntu-20.04' (v202107.28.0) for 'virtualbox'!
+> ==> default: Importing base box 'bento/ubuntu-20.04'...
+> ==> default: Matching MAC address for NAT networking...
+> ==> default: Checking if box 'bento/ubuntu-20.04' version '202107.28.0' is up to date...
+> ==> default: Setting the name of the VM: files_default_1633011561489_58955
+> Vagrant is currently configured to create VirtualBox synced folders with
+> the `SharedFoldersEnableSymlinksCreate` option enabled. If the Vagrant
+> guest is not trusted, you may want to disable this option.
+
+- vagrant suspend выключит виртуальную машину с сохранением ее состояния (т.е., при следующем vagrant up будут запущены все процессы внутри, которые работали на момент вызова suspend), vagrant halt выключит виртуальную машину штатным образом.
+
+5. Ознакомьтесь с графическим интерфейсом VirtualBox, посмотрите как выглядит виртуальная машина, которую создал для вас Vagrant, какие аппаратные ресурсы ей выделены. Какие ресурсы выделены по-умолчанию?    
+> 2cpu, 1gb, 64Gb hdd
+
+6. Ознакомьтесь с возможностями конфигурации VirtualBox через Vagrantfile: документация. Как добавить оперативной памяти или ресурсов процессора виртуальной машине?
+>
+Изменением/добавлением следующих параметров Vagrantfile
+config.vm.provider "virtualbox" do |v|  
+  v.memory = 1024    
+  v.cpus = 2  
+end
+>
+8. Команда vagrant ssh из директории, в которой содержится Vagrantfile, позволит вам оказаться внутри виртуальной машины без каких-либо дополнительных настроек. Попрактикуйтесь в выполнении обсуждаемых команд в терминале Ubuntu.
+> Работает!  
+
+9. Ознакомиться с разделами man bash, почитать о настройках самого bash:
+
+какой переменной можно задать длину журнала history, и на какой строчке manual это описывается?
+> 862 строка, HISTSIZE 
+что делает директива ignoreboth в bash?
+> ignorespace — не сохранять строки начинающиеся с символа <пробел>  
+> ignoredups — не сохранять строки, совпадающие с последней выполненной командой  
+> ignoreboth = и ‘ignorespace’ и ‘ignoredups’  
+
+В каких сценариях использования применимы скобки {} и на какой строчке man bash это описано?
+> строка 257 списки (list)  
+> 
+
+10. С учётом ответа на предыдущий вопрос, как создать однократным вызовом touch 100000 файлов? Получится ли аналогичным образом создать 300000? Если нет, то почему?
+> touch myfile{0001..0003}  
+> 100000 получится, а 300000 тыс нет, надо будет увеличивать размер стека командой ulimit. Но точное соотношение "количество создаваемых файлов" - "размер стека" для меня неизвестно.    
+11. В man bash поищите по /\[\[. Что делает конструкция [[ -d /tmp ]]
+>Вычисляется выражение заключенное в [[]] с единым кодом возврата 1 или 0,  [[ -d /tmp ]] проверяет существование каталога /tmp  
+
+12. Основываясь на знаниях о просмотре текущих (например, PATH) и установке новых переменных; командах, которые мы рассматривали, добейтесь в выводе type -a bash в виртуальной машине наличия первым пунктом в списке:
+
+bash is /tmp/new_path_directory/bash
+bash is /usr/local/bin/bash
+bash is /bin/bash
+(прочие строки могут отличаться содержимым и порядком) В качестве ответа приведите команды, которые позволили вам добиться указанного вывода или соответствующие скриншоты.
+>export PATH="/tmp/new_path_directory:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"  
+> и копирование файла bash в соотв каталог
+>
+13. Чем отличается планирование команд с помощью batch и at?
+>команда at используется для назначения одноразового задания на заданное время, а команда batch — для назначения одноразовых задач, которые должны выполняться, когда загрузка системы становится меньше 0,8.  
+
+
+
+
+
+
+
+
+vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Box 'bento/ubuntu-20.04' could not be found. Attempting to find and install...
+    default: Box Provider: virtualbox
+    default: Box Version: >= 0
+==> default: Loading metadata for box 'bento/ubuntu-20.04'
+    default: URL: https://vagrantcloud.com/bento/ubuntu-20.04
+==> default: Adding box 'bento/ubuntu-20.04' (v202107.28.0) for provider: virtualbox
+    default: Downloading: https://vagrantcloud.com/bento/boxes/ubuntu-20.04/versions/202107.28.0/providers/virtualbox.box
+    default:
+==> default: Successfully added box 'bento/ubuntu-20.04' (v202107.28.0) for 'virtualbox'!
+==> default: Importing base box 'bento/ubuntu-20.04'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'bento/ubuntu-20.04' version '202107.28.0' is up to date...
+==> default: Setting the name of the VM: files_default_1633011561489_58955
+Vagrant is currently configured to create VirtualBox synced folders with
+the `SharedFoldersEnableSymlinksCreate` option enabled. If the Vagrant
+guest is not trusted, you may want to disable this option. For more
+information on this option, please refer to the VirtualBox manual:
+
+  https://www.virtualbox.org/manual/ch04.html#sharedfolders
+
+This option can be disabled globally with an environment variable:
+
+  VAGRANT_DISABLE_VBOXSYMLINKCREATE=1
+
+or on a per folder basis within the Vagrantfile:
+
+  config.vm.synced_folder '/host/path', '/guest/path', SharedFoldersEnableSymlinksCreate: false
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+Timed out while waiting for the machine to boot. This means that
+Vagrant was unable to communicate with the guest machine within
+the configured ("config.vm.boot_timeout" value) time period.
+
+If you look above, you should be able to see the error(s) that
+Vagrant had when attempting to connect to the machine. These errors
+are usually good hints as to what may be wrong.
+
+If you're using a custom box, make sure that networking is properly
+working and you're able to connect to the machine. It is a common
+problem that networking isn't setup properly in these boxes.
+Verify that authentication configurations are also setup properly,
+as well.
+
+If the box appears to be booting properly, you may want to increase
+the timeout ("config.vm.boot_timeout") value.
+
 
 
 
