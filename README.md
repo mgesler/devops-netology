@@ -1,82 +1,111 @@
 # devops-netology
-Home work 03-sysadmin-03-os
+Home work 03-sysadmin-06-net
 
-Домашнее задание к занятию "3.3. Операционные системы, лекция 1"
+Домашнее задание к занятию "3.6. Компьютерные сети, лекция 1"
 
-1. Какой системный вызов делает команда cd? В прошлом ДЗ мы выяснили, что cd не является самостоятельной программой, это shell builtin, поэтому запустить strace непосредственно на cd не получится. Тем не менее, вы можете запустить strace на /bin/bash -c 'cd /tmp'. В этом случае вы увидите полный список системных вызовов, которые делает сам bash при старте. Вам нужно найти тот единственный, который относится именно к cd. Обратите внимание, что strace выдаёт результат своей работы в поток stderr, а не в stdout.
-> chdir("/tmp")                           = 0
+1. Работа c HTTP через телнет.
+Подключитесь утилитой телнет к сайту stackoverflow.com telnet stackoverflow.com 80  
+отправьте HTTP запрос  
+GET /questions HTTP/1.0  
+HOST: stackoverflow.com  
+[press enter]  
+[press enter]  
+В ответе укажите полученный HTTP код, что он означает?   
+> HTTP/1.1 400 Bad Request - неправильный запрос (ошибка синтаксиса)
+2. Повторите задание 1 в браузере, используя консоль разработчика F12.  
+* откройте вкладку Network  
+* отправьте запрос http://stackoverflow.com  
+* найдите первый ответ HTTP сервера, откройте вкладку Headers  
+* укажите в ответе полученный HTTP код.  
+>Status Code: 200 
+* проверьте время загрузки страницы, какой запрос обрабатывался дольше всего?
+> Load: 724 ms
+> Дольше всего: 
+> Request URL: https://stackoverflow.com/
+> Request Method: GET
+* приложите скриншот консоли браузера в ответ.  
+![](//screenshot1.jpg)
+3. Какой IP адрес у вас в интернете?
+>213.87.155.155
+4. Какому провайдеру принадлежит ваш IP адрес? Какой автономной системе AS? Воспользуйтесь утилитой whois
+Mobile TeleSystems, PJSC , AS8359
+5. Через какие сети проходит пакет, отправленный с вашего компьютера на адрес 8.8.8.8? Через какие AS? Воспользуйтесь утилитой traceroute
+>C:\Users\user01>tracert 8.8.8.8
 
-2. Попробуйте использовать команду file на объекты разных типов на файловой системе. Например:  
-vagrant@netology1:~$ file /dev/tty  
-/dev/tty: character special (5/0)  
-vagrant@netology1:~$ file /dev/sda  
-/dev/sda: block special (8/0)  
-vagrant@netology1:~$ file /bin/bash  
-/bin/bash: ELF 64-bit LSB shared object, x86-64  
-Используя strace выясните, где находится база данных file на основании которой она делает свои догадки.  
-> Один из этих файлов:
->openat(AT_FDCWD, "/etc/magic.mgc", O_RDONLY) = -1 ENOENT (No such file or directory)
->openat(AT_FDCWD, "/etc/magic", O_RDONLY) = 6
->openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 6
+>Трассировка маршрута к dns.google [8.8.8.8]
+> с максимальным числом прыжков 30:
 
-3. Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. 
-Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).  
-> Допустим, приложение пишет лог в 1.txt
-> lsof | grep 1.txt - получим файловый дескриптор и PID
-> mc        18903                          root   10w      REG              253,0        1         18 /1.txt
-> echo > /proc/18903/fd/10
+> 1     1 ms    <1 мс    <1 мс  dlinkrouter.Dlink [192.168.0.1]
+> 2     5 ms     2 ms    <1 мс  10.251.1.1
+> 3     2 ms     2 ms    12 ms  10.0.11.77
+> 4     1 ms     3 ms     1 ms  10.1.1.22
+> 5    15 ms     7 ms     1 ms  msk.piter-ix.google.com [185.1.160.11]
+> 6     2 ms     2 ms     1 ms  108.170.250.83
+> 7     *        *        *     Превышен интервал ожидания для запроса.
+> 8    16 ms    17 ms    16 ms  172.253.66.110
+> 9    19 ms    18 ms    18 ms  172.253.64.53
+> 10     *        *        *     Превышен интервал ожидания для запроса.
+> 11     *        *        *     Превышен интервал ожидания для запроса.
+> 12     *        *        *     Превышен интервал ожидания для запроса.
+> 13     *        *        *     Превышен интервал ожидания для запроса.
+> 14     *        *        *     Превышен интервал ожидания для запроса.
+> 15     *        *        *     Превышен интервал ожидания для запроса.
+> 16     *        *        *     Превышен интервал ожидания для запроса.
+> 17     *        *        *     Превышен интервал ожидания для запроса.
+> 18     *        *        *     Превышен интервал ожидания для запроса.
+> 19     *        *        *     Превышен интервал ожидания для запроса.
+> 20     *        *        *     Превышен интервал ожидания для запроса.
+> 21    17 ms    17 ms    17 ms  dns.google [8.8.8.8]
 
-4. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
-> Нет
-5. В iovisor BCC есть утилита opensnoop:
-root@vagrant:~# dpkg -L bpfcc-tools | grep sbin/opensnoop
-/usr/sbin/opensnoop-bpfcc
-На какие файлы вы увидели вызовы группы open за первую секунду работы утилиты? Воспользуйтесь пакетом bpfcc-tools для Ubuntu 20.04. Дополнительные сведения по установке.
-Какой системный вызов использует uname -a? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в /proc, где можно узнать версию ядра и релиз ОС.
-root@vagrant:/home/vagrant# /usr/sbin/opensnoop-bpfcc
-*
-PID    COMM               FD ERR PATH  
-879    vminfo              4   0 /var/run/utmp  
-567    dbus-daemon        -1   2 /usr/local/share/dbus-1/system-services  
-567    dbus-daemon        18   0 /usr/share/dbus-1/system-services  
-567    dbus-daemon        -1   2 /lib/dbus-1/system-services  
-567    dbus-daemon        18   0 /var/lib/snapd/dbus-1/system-services/  
-586    irqbalance          6   0 /proc/interrupts  
-586    irqbalance          6   0 /proc/stat  
-586    irqbalance          6   0 /proc/irq/20/smp_affinity  
-586    irqbalance          6   0 /proc/irq/0/smp_affinity  
-586    irqbalance          6   0 /proc/irq/1/smp_affinity  
-586    irqbalance          6   0 /proc/irq/8/smp_affinity  
-586    irqbalance          6   0 /proc/irq/12/smp_affinity  
-586    irqbalance          6   0 /proc/irq/14/smp_affinity  
-586    irqbalance          6   0 /proc/irq/15/smp_affinity  
-567    dbus-daemon        -1   2 /usr/local/share/dbus-1/system-services  
-567    dbus-daemon        18   0 /usr/share/dbus-1/system-services  
-567    dbus-daemon        -1   2 /lib/dbus-1/system-services  
-567    dbus-daemon        18   0 /var/lib/snapd/dbus-1/system-services/  
-879    vminfo              4   0 /var/run/utmp  
-*
+> домашняя сеть, сеть провайдера (приватные адреса), далее уже сеть Google 
+> 1-4 приватные сети, 5 - нет открытой информации о принадлежности к AS (!), 6 AS15169, 7 AS15169
+> 21 - нет открытой информации о принадлежности к AS (!)
 
->Part of the utsname information is also accessible via
->       /proc/sys/kernel/{ostype, hostname, osrelease, version,
->       domainname}.
+6. Повторите задание 5 в утилите mtr. На каком участке наибольшая задержка - delay?
+>                                                 My traceroute  [v0.93]
+> vagrant (10.0.2.15)                                                                            2021-11-01T14:15:02+0000
+> Keys:  Help   Display mode   Restart statistics   Order of fields   quit
+>                                                                               Packets               Pings
+> Host                                                                        Loss%   Snt   Last   Avg  Best  Wrst StDev
+> _gateway                                                                  0.0%    15    0.7   0.7   0.5   2.0   0.4
+> 192.168.0.1                                                               0.0%    15    6.9   4.1   2.4  14.6   3.1
+> 10.251.1.1                                                                0.0%    15    3.5   4.8   3.2   9.3   1.8
+> 10.0.11.77                                                                0.0%    15    5.7   6.8   3.1  23.4   5.2
+> 10.1.1.22                                                                 0.0%    15   15.7   6.2   3.2  15.7   3.8
+> msk.piter-ix.google.com                                                   0.0%    15    5.4   5.3   3.0   8.6   1.8
+> 108.170.250.83                                                           40.0%    15    4.1  12.0   3.1  39.1  14.4
+> 209.85.249.158                                                           85.7%    14   21.4  20.5  19.6  21.4   1.3
+> 216.239.57.222                                                            0.0%    14   22.4  23.1  20.2  27.2   2.1
+> 172.253.64.53                                                             0.0%    14   23.6  23.2  21.3  30.0   2.3
+(waiting for reply)
+(waiting for reply)
+(waiting for reply)
+(waiting for reply)
+(waiting for reply)
+(waiting for reply)
+(waiting for reply)
+(waiting for reply)
+(waiting for reply)
+> dns.google                                                                0.0%    14   20.2  21.0  19.9  24.8   1.3
+> Наибольшая средняя задержка между 108.170.250.83 и 209.85.249.158 , 
+> если ее рассчитывать как разность между средними задержками текущего и предыдущего узла в пути
 
-7. Чем отличается последовательность команд через ; и через && в bash? Например:
-root@netology1:~# test -d /tmp/some_dir; echo Hi
-Hi
-root@netology1:~# test -d /tmp/some_dir && echo Hi
-root@netology1:~#
-Есть ли смысл использовать в bash &&, если применить set -e?
-> ; - Последовательное безусловное выполнение 
-> && - Последовательное выполнение при успешном выполнении предыдущей команды
-> set -e Exit immediately if a command exits with a non-zero status. Конечно, имеет смысл использовать && ведь команда может завершиться и с нулевым статусом (успешно)
-
-8. Из каких опций состоит режим bash set -euxo pipefail и почему его хорошо было бы использовать в сценариях?
-> -e Если одна из команд скрипта завершается неуспешно, то весь скрипт немедленно завершается.
-> -u Если работа с переменными завершается неуспешно, то весь скрирт немедленно завершается.
-> -x Выполняемые команды отображаются на консоли
-> pipefail - если одна из команд в pipe завершилась неуспешно, то весь pipe завершается с кодом ошибки этой команды.  
-> Результат работы скрипта будет более предсказуем, если можно обрабатывать ошибки хотя бы на таком уровне 
-9. Используя -o stat для ps, определите, какой наиболее часто встречающийся статус у процессов в системе. В man ps ознакомьтесь (/PROCESS STATE CODES) что значат дополнительные к основной заглавной буквы статуса процессов. Его можно не учитывать при расчете (считать S, Ss или Ssl равнозначными).
-
->S -  interruptible sleep, наиболее часто встречающийся 
+7. Какие DNS сервера отвечают за доменное имя dns.google? Какие A записи? воспользуйтесь утилитой dig
+>NS:
+>google.com.             7150    IN      NS      ns4.google.com.
+>google.com.             7150    IN      NS      ns3.google.com.
+>google.com.             7150    IN      NS      ns2.google.com.
+>google.com.             7150    IN      NS      ns1.google.com.
+> 
+> A:
+> google.com.             237     IN      A       173.194.73.101
+>google.com.             237     IN      A       173.194.73.138
+>google.com.             237     IN      A       173.194.73.139
+>google.com.             237     IN      A       173.194.73.100
+>google.com.             237     IN      A       173.194.73.113
+>google.com.             237     IN      A       173.194.73.102
+> 
+8. Проверьте PTR записи для IP адресов из задания 7. Какое доменное имя привязано к IP? воспользуйтесь утилитой dig
+>173.194.73.101 lq-in-f101.1e100.net.
+> 173.194.73.138 lq-in-f138.1e100.net.
+> и так далее
