@@ -24,7 +24,7 @@ HOST: stackoverflow.com
 > Request URL: https://stackoverflow.com/
 > Request Method: GET
 * приложите скриншот консоли браузера в ответ.  
-![](//blob/main/screenshot1.JPG)
+![](/blob/main/screenshot1.JPG)
 3. Какой IP адрес у вас в интернете?
 >213.87.155.155
 4. Какому провайдеру принадлежит ваш IP адрес? Какой автономной системе AS? Воспользуйтесь утилитой whois
