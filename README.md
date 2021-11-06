@@ -27,8 +27,8 @@ Home work 03-sysadmin-07-net
 > balance-tlb (mode=5) — режим адаптивной балансировки передачи, исходящий трафик распределяется в зависимости от загруженности и интерфейса. Не требует от коммутатора настройки. Входящий трафик приходит на текущий интерфейс. Если активный интерфейс выходит из строя, используется другой интерфейс.  
 > balance-alb (mode=6) — режим адаптивной балансировки нагрузки, обеспечивает балансировку нагрузки как передачи (TLB, transmit load balancing), так и приёма для IPv4 через ARP. Не требует от коммутатора настройки, но требует возможности изменять MAC-адрес устройства.    
 >  
-> # Пример конфигурации active-backup    
-> # auto eth0  
+> Пример конфигурации active-backup    
+>  auto eth0  
 > iface eth0 inet manual    
 >    bond-master bond0  
 >    bond-primary eth0    
@@ -36,9 +36,7 @@ Home work 03-sysadmin-07-net
 > auto eth1  
 > iface eth1 inet manual  
 >    bond-master bond0  
->
-> # bond0 is the bonding NIC and can be used like any other normal NIC.    
-> # bond0 is configured using static network information.  
+> 
 > auto bond0  
 > iface bond0 inet static  
 >    address 192.168.1.10  
