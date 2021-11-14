@@ -67,7 +67,7 @@ Home work 03-sysadmin-04-os
 добавьте в Vagrantfile проброс порта Netdata на свой локальный компьютер и сделайте vagrant reload:  
 config.vm.network "forwarded_port", guest: 19999, host: 19999  
 После успешной перезагрузки в браузере на своем ПК (не в виртуальной машине) вы должны суметь зайти на localhost:19999. Ознакомьтесь с метриками, которые по умолчанию собираются Netdata и с комментариями, которые даны к этим метрикам.  
-> ![](https://myoctocat.com/assets/images/base-octocat.svg)
+> ![](https://github.com/mgesler/devops-netology/blob/main/netdata.jpg)
 
 4. Можно ли по выводу dmesg понять, осознает ли ОС, что загружена не на настоящем оборудовании, а на системе виртуализации?
 >root@vagrant:/home/vagrant# dmesg |grep virtual  
