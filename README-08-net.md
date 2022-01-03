@@ -58,4 +58,4 @@ show bgp x.x.x.x/32
 
 5. Используя diagrams.net, создайте L3 диаграмму вашей домашней сети или любой другой сети, с которой вы работали.  
 >
-![](//mynet1.png)
+![](https://github.com/mgesler/devops-netology/blob/main/mynet1.png)
