@@ -137,9 +137,65 @@ apt install openssh-server
 systemctl start sshd.service
 systemctl enable sshd.service
 
+ssh-copy-id netology@89.225.65.18
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/netology/.ssh/id_rsa.pub"
+The authenticity of host '89.225.65.18 (89.225.65.18)' can't be established.
+ECDSA key fingerprint is SHA256:NweWINcNfWmF81ZPQJPi8hedMH82Exc8Y04+PSEtxZY.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+netology@89.225.65.18's password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'netology@89.225.65.18'"
+and check to make sure that only the key(s) you wanted were added.
+
+ssh 89.225.65.18
+Enter passphrase for key '/netology/.ssh/id_rsa':
+Linux pve01 5.4.78-2-pve #1 SMP PVE 5.4.78-2 (Thu, 03 Dec 2020 14:26:17 +0100) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Sat Jan  1 14:31:05 2022
+netology@pve01:~#
 
 ````
 6. Переименуйте файлы ключей из задания 5. Настройте файл конфигурации SSH клиента, так чтобы вход на удаленный сервер осуществлялся по имени сервера.
+````
+touch ~/.ssh/config && chmod 600 ~/.ssh/config
+cp id_rsa some_server.key
 
-Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
+vi ~/.ssh/config
 
+Host my_server
+HostName 89.225.65.18
+IdentityFile ~/.ssh/some_server.key
+User netology
+
+Host *
+IdentityFile ~/.ssh/id_rsa
+
+ ssh my_server
+Enter passphrase for key '/netology/.ssh/some_server.key':
+Linux pve01 5.4.78-2-pve #1 SMP PVE 5.4.78-2 (Thu, 03 Dec 2020 14:26:17 +0100) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Mon Jan  3 21:45:24 2022 from 90.15.1.31
+netology@pve01:~#
+
+````
+8. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
+````
+apt install tcpdump
+tcpdump -c 100 -i eth0 -w 1.pcap
+![](https://github.com/mgesler/devops-netology/blob/main/wireshark.jpg)
