@@ -198,4 +198,5 @@ netology@pve01:~#
 ````
 apt install tcpdump
 tcpdump -c 100 -i eth0 -w 1.pcap
+````
 ![](https://github.com/mgesler/devops-netology/blob/main/pic/wireshark.jpg)
