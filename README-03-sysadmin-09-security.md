@@ -4,10 +4,10 @@ Home work 03-sysadmin-09-security
 Домашнее задание к занятию "3.9. Элементы безопасности информационных систем"    
 
 1. Установите Bitwarden плагин для браузера. Зарегестрируйтесь и сохраните несколько паролей.  
-![](https://github.com/mgesler/devops-netology/blob/main/bitwarden1.jpg)
+![](https://github.com/mgesler/devops-netology/blob/main/pic/pic/bitwarden1.jpg)
 
 2. Установите Google authenticator на мобильный телефон. Настройте вход в Bitwarden акаунт через Google authenticator OTP.
-![](https://github.com/mgesler/devops-netology/blob/main/bitwarden2.jpg)
+![](https://github.com/mgesler/devops-netology/blob/main/pic/bitwarden2.jpg)
 3. Установите apache2, сгенерируйте самоподписанный сертификат, настройте тестовый сайт для работы по HTTPS.
 > apt install apache2  
 > a2enmod ssl  
@@ -18,7 +18,7 @@ Home work 03-sysadmin-09-security
 > systemctl reload apache2  
 > apt install links  
 > links  
-> ![](https://github.com/mgesler/devops-netology/blob/main/ssl-cert-error.jpg)
+> ![](https://github.com/mgesler/devops-netology/blob/main/pic/ssl-cert-error.jpg)
 > it worked!  
 
 
@@ -198,4 +198,4 @@ netology@pve01:~#
 ````
 apt install tcpdump
 tcpdump -c 100 -i eth0 -w 1.pcap
-![](https://github.com/mgesler/devops-netology/blob/main/wireshark.jpg)
+![](https://github.com/mgesler/devops-netology/blob/main/pic/wireshark.jpg)
