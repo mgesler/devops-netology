@@ -198,6 +198,28 @@ Paths: (23 available, best #13, table default)
 >    address 10.2.2.2/32
 >    pre-up ip link add dummy0 type dummy
 >    post-down ip link del dummy0
+
+````
+ip address
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:73:60:cf brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 79230sec preferred_lft 79230sec
+    inet6 fe80::a00:27ff:fe73:60cf/64 scope link
+       valid_lft forever preferred_lft forever
+3: dummy0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ether 86:51:b8:48:95:18 brd ff:ff:ff:ff:ff:ff
+    inet 10.2.2.2/32 brd 10.2.2.2 scope global dummy0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::8451:b8ff:fe48:9518/64 scope link
+       valid_lft forever preferred_lft forever
+````
 >   
 > Статический маршрут: добавил в /etc/netplan/01-netcfg.yaml , в соотв интерфейс  
 >  routes:  
