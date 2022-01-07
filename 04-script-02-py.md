@@ -123,7 +123,7 @@ for counter1 in range(count1):
     for host in hosts:
             ip=socket.gethostbyname(host)
             if ip!=hosts[host]:
-                    print ('[ERROR] http://'+host+' - '+hosts[host]+' - '+ip)
+                    print ('[ERROR] http://'+host+' IP mismatch: '+hosts[host]+' - '+ip)
                     try:
                             h1 = http.client.HTTPConnection(host)
                             hosts[host]=ip
