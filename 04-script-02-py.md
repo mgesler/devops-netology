@@ -133,14 +133,14 @@ for counter1 in range(count1):
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-http://drive.google.com - 64.233.164.194
-http://mail.google.com - 64.233.165.17
-http://google.com - 173.194.222.101
+http://drive.google.com - 74.125.131.194
+http://mail.google.com - 64.233.161.83
+http://google.com - 173.194.222.100
 0
-[ERROR] http://mail.google.com - 64.233.165.17 - 64.233.165.19
+[ERROR] http://mail.google.com IP mismatch: 64.233.161.83 - 64.233.161.19
+[ERROR] http://google.com IP mismatch: 173.194.222.100 - 173.194.222.138
 1
 2
-[ERROR] http://drive.google.com - 64.233.164.194 - 108.177.14.194
 3
 4
 5
