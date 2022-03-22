@@ -20,8 +20,10 @@ Hey, Netology
 </html>
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на https://hub.docker.com/username_repo.
 
->>https://hub.docker.com/repository/docker/nollon/netology
->>nollon/netology:1.0
+````
+https://hub.docker.com/repository/docker/nollon/netology
+nollon/netology:1.0
+````
 
 Задача 2
 Посмотрите на сценарий ниже и ответьте на вопрос: "Подходит ли в этом сценарии использование Docker контейнеров или лучше подойдет виртуальная машина, физическая машина? Может быть возможны разные варианты?"
