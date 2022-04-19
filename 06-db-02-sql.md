@@ -39,7 +39,7 @@ SQL-запрос для выдачи списка пользователей с 
 SELECT DISTINCT grantee, privilege_type FROM information_schema.table_privileges where table_catalog = 'test_db';
 ````
 список пользователей с правами над таблицами test_db
-![](https://github.com/mgesler/devops-netology/blob/main/pic/sql-grantee.jpg)
+![](https://github.com/mgesler/devops-netology/blob/main/pic/sql-grant.jpg)
 
 Задача 3  
 Используя SQL синтаксис - наполните таблицы следующими тестовыми данными:
