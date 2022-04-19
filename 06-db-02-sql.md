@@ -142,12 +142,7 @@ select * from clients where order_id is not null;
 Приведите список операций, который вы применяли для бэкапа данных и восстановления.
 
 ````
-docker exec -ti 0008223fbae7 /bin/bash
 pg_dump -U postgres test_db > /var/lib/postgresql/backups/test_db.sql
-exit
-docker stop 0008223fbae7
-docker run -e POSTGRES_PASSWORD=password -e PGDATA=/var/lib/postgresql/data -p 5432:5432 -v /tmp/postgres/data:/var/lib/postgresql/data -v /tmp/postgres/backups:/var/lib/postgresql/backups -d postgres:12.10
-docker exec -ti 6c9aaef2d7de /bin/bash
-psql -U postgres test_db < /var/lib/postgresql/backups/test_db.sql
 
+psql -U postgres test_db < /var/lib/postgresql/backups/test_db.sql
 ````
