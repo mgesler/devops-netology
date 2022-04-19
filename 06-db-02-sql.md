@@ -9,7 +9,7 @@ Home work 06-db-02-sql
 ````
 docker run -e POSTGRES_PASSWORD=password -e PGDATA=/var/lib/postgresql/data -p 5432:5432 -v /tmp/postgres/data:/var/lib/postgresql/data -v /tmp/postgres/backups:/var/lib/postgresql/backups -d postgres:12.10
 ````
-Задача 2
+Задача 2  
 В БД из задачи 1:
 
 создайте пользователя test-admin-user и БД test_db
@@ -41,7 +41,7 @@ SELECT DISTINCT grantee, privilege_type FROM information_schema.table_privileges
 список пользователей с правами над таблицами test_db
 ![](https://github.com/mgesler/devops-netology/blob/main/pic/sql-grantee.jpg)
 
-Задача 3
+Задача 3  
 Используя SQL синтаксис - наполните таблицы следующими тестовыми данными:
 
 Таблица orders
@@ -130,7 +130,7 @@ select * from clients where order_id is not null;
 ````
 
 
-Задача 6
+Задача 6  
 Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
 
 Остановите контейнер с PostgreSQL (но не удаляйте volumes).
