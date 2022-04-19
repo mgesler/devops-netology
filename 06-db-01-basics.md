@@ -1,5 +1,5 @@
 # devops-netology  
-Home work 06-db-01-basics
+Home work 06-db-01-basics v2
 
 Домашнее задание к занятию "6.1. Типы и структура СУБД"
 
