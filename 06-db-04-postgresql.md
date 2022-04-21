@@ -59,13 +59,13 @@ ANALYZE
 
 Приведите в ответе команду, которую вы использовали для вычисления и полученный результат.
 ````
-  select avg_width from pg_stats where tablename='orders';
- avg_width
------------
-         4
-        16
-         4
-(3 rows)
+test_database=# select attname, avg_width from pg_stats where tablename = 'orders'
+order by avg_width DESC limit 1;
+ attname | avg_width
+---------+-----------
+ title   |        16
+(1 row)
+
 
 ````
 Задача 3  
