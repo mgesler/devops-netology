@@ -22,25 +22,12 @@ Pull +
 
 3. Какие из ниже перечисленных систем относятся к push модели, а какие к pull? А может есть гибридные?
 
-    - Prometheus
 ````
-Дефолтно pull, но может работать и как push
-````
-    - TICK
-````
-push 
-````
-    - Zabbix
-````
-Гибрид
-````
-    - VictoriaMetrics
-````
-Гибрид
-````
-    - Nagios
-````
-pull
+    - Prometheus Дефолтно pull, но может работать и как push
+    - TICK push 
+    - Zabbix Гибрид, умеет штатно обе системы
+    - VictoriaMetrics Гибрид
+    - Nagios pull
 ````
 
 4. Склонируйте себе [репозиторий](https://github.com/influxdata/sandbox/tree/master) и запустите TICK-стэк, 
