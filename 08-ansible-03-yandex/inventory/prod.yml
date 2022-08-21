@@ -1,0 +1,22 @@
+---
+elasticsearch:
+  hosts:
+    els:
+        ansible_host: '10.2.29.10'
+        ansible_user: 'root'
+        ansible_password: 7285986
+
+kibana:
+  hosts:
+    kbn:
+        ansible_host: '10.2.29.10'
+        ansible_user: 'root'
+        ansible_password: 7285986
+
+
+filebeat:
+  hosts:
+    fbt:
+        ansible_host: '10.2.29.10'
+        ansible_user: 'root'
+        ansible_password: 7285986
