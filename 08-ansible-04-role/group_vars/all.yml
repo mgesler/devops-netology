@@ -1,0 +1,2 @@
+elastic_host: 10.128.0.22
+kibana_host: 10.128.0.24
